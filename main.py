@@ -1,5 +1,4 @@
 import requests
-import http.client
 from bs4 import BeautifulSoup as bs
 import streamlit as st
 
@@ -7,25 +6,13 @@ st.set_page_config(page_title='Flipkart Review Scraper', page_icon=":mag:", layo
 st.title('Flipkart Review Scraper')
 inp= st.text_input("Enter Search Term", "Redmi Phones").replace(" ", "%20")
 url="https://www.flipkart.com/search?q=" + inp
-headers={'Accept-Encoding': 'identity, deflate, compress, gzip','Accept': '*/*', 'User-Agent': 'python-requests/1.2.0'}
-st.write('Fetching search results...')
-st.write(str(url))
-conn=http.client.HTTPSConnection("www.flipkart.com")
-conn.request('GET','/search?q='+inp)
-a=conn.getresponse().read().decode()
-st.write('Data: '+a)
-# a=requests.get(url,headers=headers,verify=False)
-# st.write(str(a)+str(a.headers)+str(a.cookies))
-# st.write(str(a.request.headers))
-dat=bs(a,'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
-st.write("dat: "+str(dat))
+dat=bs(requests.get(url),'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
 products=[]
 for i in range(len(dat)):
     try: products.append("https://www.flipkart.com"+dat[i].div.div.div.a["href"])
     except: continue
 def get_review(link):
-    st.write(f'Fetching reviews for {link}...')
-    prod=requests.get(link,headers=headers, verify=False)
+    prod=requests.get(link)
     prod=bs(prod.text,"html.parser")
     t=prod.find("span",{"class":"B_NuCI"})
     try: name=t.text
@@ -34,12 +21,8 @@ def get_review(link):
     return name,[[i.div.div.text,i.div.p.text,i.find("div",{"class":""}).div.text,i.find("p",{"class":"_2sc7ZR _2V5EHH"}).text,i.findAll("p",{"class":"_2sc7ZR"})[1].text] for i in rev]
 
 if st.button('Get Reviews'):
-    st.write("Tapped Button")
     with st.spinner('Fetching reviews...'):
-        st.write("Starting Spinning")
-        st.write(str(products))
         for i in products:
-            st.write("Product Selected")
             r=get_review(i)
             if r[0]==inp: continue
             st.subheader(f'Product: {r[0]}')
