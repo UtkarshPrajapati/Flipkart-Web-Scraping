@@ -1,18 +1,22 @@
 import requests
+import http.client
 from bs4 import BeautifulSoup as bs
 import streamlit as st
 
 st.set_page_config(page_title='Flipkart Review Scraper', page_icon=":mag:", layout='wide', initial_sidebar_state='auto')
 st.title('Flipkart Review Scraper')
-inp= st.text_input("Enter Search Term", "Redmi Phones")
+inp= st.text_input("Enter Search Term", "Redmi Phones").replace(" ", "%20")
 url="https://www.flipkart.com/search?q=" + inp
 headers={'Accept-Encoding': 'identity, deflate, compress, gzip','Accept': '*/*', 'User-Agent': 'python-requests/1.2.0'}
 st.write('Fetching search results...')
 st.write(str(url))
-a=requests.get(url,headers=headers,verify=False)
-st.write(str(a)+str(a.headers)+str(a.cookies))
-st.write(str(a.request.headers))
-dat=bs(a.text,'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
+conn=http.client.HTTPSConnection("www.flipkart.com")
+conn.request('GET','/search?q='+inp)
+a=conn.getresponse().read().decode()
+# a=requests.get(url,headers=headers,verify=False)
+# st.write(str(a)+str(a.headers)+str(a.cookies))
+# st.write(str(a.request.headers))
+dat=bs(a,'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
 st.write("dat: "+str(dat))
 products=[]
 for i in range(len(dat)):
