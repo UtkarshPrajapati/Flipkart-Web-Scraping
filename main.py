@@ -11,6 +11,7 @@ st.write('Fetching search results...')
 st.write(str(url))
 a=requests.get(url,headers=headers,)
 st.write(str(a)+str(a.headers)+str(a.cookies))
+st.write(str(a.request.headers))
 dat=bs(a.text,'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
 st.write("dat: "+str(dat))
 products=[]
