@@ -6,7 +6,7 @@ st.set_page_config(page_title='Flipkart Review Scraper', page_icon=":mag:", layo
 st.title('Flipkart Review Scraper')
 inp= st.text_input("Enter Search Term", "Redmi Phones").replace(" ", "%20")
 url="https://www.flipkart.com/search?q=" + inp
-dat=bs(requests.get(url),'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
+dat=bs(requests.get(url).text,'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
 products=[]
 for i in range(len(dat)):
     try: products.append("https://www.flipkart.com"+dat[i].div.div.div.a["href"])
