@@ -9,7 +9,9 @@ url="https://www.flipkart.com/search?q=" + inp
 headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive'}
 st.write('Fetching search results...')
 st.write(str(url))
-dat=bs(requests.get(url,headers=headers).text,'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
+a=requests.get(url,headers=headers)
+st.write(str(a))
+dat=bs(a.text,'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
 st.write("dat: "+str(dat))
 products=[]
 for i in range(len(dat)):
