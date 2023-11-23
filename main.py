@@ -6,11 +6,11 @@ st.set_page_config(page_title='Flipkart Review Scraper', page_icon=":mag:", layo
 st.title('Flipkart Review Scraper')
 inp= st.text_input("Enter Search Term", "Redmi Phones")
 url="https://www.flipkart.com/search?q=" + inp
-headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive'}
+headers={'Accept-Encoding': 'identity, deflate, compress, gzip','Accept': '*/*', 'User-Agent': 'python-requests/1.2.0'}
 st.write('Fetching search results...')
 st.write(str(url))
 a=requests.get(url,headers=headers,)
-st.write(str(a)+str(a.headers))
+st.write(str(a)+str(a.headers)+str(a.cookies))
 dat=bs(a.text,'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
 st.write("dat: "+str(dat))
 products=[]
