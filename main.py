@@ -24,7 +24,9 @@ def get_review(link):
     return name,[[i.div.div.text,i.div.p.text,i.find("div",{"class":""}).div.text,i.find("p",{"class":"_2sc7ZR _2V5EHH"}).text,i.findAll("p",{"class":"_2sc7ZR"})[1].text] for i in rev]
 
 if st.button('Get Reviews'):
+    st.write("Tapped Button")
     with st.spinner('Fetching reviews...'):
+        st.write("Starting Spinning")
         for i in products:
             r=get_review(i)
             if r[0]==inp: continue
