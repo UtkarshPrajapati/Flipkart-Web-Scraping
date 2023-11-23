@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <!-- Add your CSS here -->
+</head>
+<body>
+    <form method="POST">
+        <input type="text" name="product" placeholder="Enter product name">
+        <input type="submit" value="Get Reviews">
+    </form>
+
+    {% for review in reviews %}
+        <h2>{{ review[0] }}</h2>
+        {% for r in review[1] %}
+            <p>{{ r }}</p>
+        {% endfor %}
+    {% endfor %}
+</body>
+</html>
