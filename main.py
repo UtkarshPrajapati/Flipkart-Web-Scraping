@@ -7,12 +7,14 @@ st.title('Flipkart Review Scraper')
 inp= st.text_input("Enter Search Term", "Redmi Phones")
 url="https://www.flipkart.com/search?q=" + inp
 headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive'}
+st.write('Fetching search results...')
 dat=bs(requests.get(url,headers=headers).text,'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
 products=[]
 for i in range(len(dat)):
     try: products.append("https://www.flipkart.com"+dat[i].div.div.div.a["href"])
     except: continue
 def get_review(link):
+    st.write(f'Fetching reviews for {link}...')
     prod=requests.get(link,headers=headers)
     prod=bs(prod.text,"html.parser")
     t=prod.find("span",{"class":"B_NuCI"})
