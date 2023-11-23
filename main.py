@@ -8,7 +8,9 @@ inp= st.text_input("Enter Search Term", "Redmi Phones")
 url="https://www.flipkart.com/search?q=" + inp
 headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive'}
 st.write('Fetching search results...')
+st.write(str(url))
 dat=bs(requests.get(url,headers=headers).text,'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
+st.write("dat: "+str(dat))
 products=[]
 for i in range(len(dat)):
     try: products.append("https://www.flipkart.com"+dat[i].div.div.div.a["href"])
