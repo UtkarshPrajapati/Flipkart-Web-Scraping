@@ -6,7 +6,7 @@ st.set_page_config(page_title='Flipkart Review Scraper', page_icon=":mag:", layo
 st.title('Flipkart Review Scraper')
 inp= st.text_input("Enter Search Term", "Redmi Phones")
 url="https://www.flipkart.com/search?q=" + inp
-headers={'User-Agent': 'Edg/119.0.0.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive'}
+headers={'User-Agent': 'Edg/119.0.0.0', 'Accept': '*/*', 'Connection': 'keep-alive'}
 st.write('Fetching search results...')
 st.write(str(url))
 a=requests.get(url,headers=headers)
