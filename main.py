@@ -27,7 +27,9 @@ if st.button('Get Reviews'):
     st.write("Tapped Button")
     with st.spinner('Fetching reviews...'):
         st.write("Starting Spinning")
+        st.write(str(products))
         for i in products:
+            st.write("Product Selected")
             r=get_review(i)
             if r[0]==inp: continue
             st.subheader(f'Product: {r[0]}')
