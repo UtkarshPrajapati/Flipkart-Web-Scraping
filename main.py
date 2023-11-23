@@ -9,7 +9,7 @@ url="https://www.flipkart.com/search?q=" + inp
 headers={'Accept-Encoding': 'identity, deflate, compress, gzip','Accept': '*/*', 'User-Agent': 'python-requests/1.2.0'}
 st.write('Fetching search results...')
 st.write(str(url))
-a=requests.get(url,headers=headers,)
+a=requests.get(url,headers=headers,verify=False)
 st.write(str(a)+str(a.headers)+str(a.cookies))
 st.write(str(a.request.headers))
 dat=bs(a.text,'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
@@ -20,7 +20,7 @@ for i in range(len(dat)):
     except: continue
 def get_review(link):
     st.write(f'Fetching reviews for {link}...')
-    prod=requests.get(link,headers=headers)
+    prod=requests.get(link,headers=headers, verify=False)
     prod=bs(prod.text,"html.parser")
     t=prod.find("span",{"class":"B_NuCI"})
     try: name=t.text
