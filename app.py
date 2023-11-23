@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from bs4 import BeautifulSoup as bs
 import requests
+import streamlit as st
 
 app = Flask(__name__)
 
