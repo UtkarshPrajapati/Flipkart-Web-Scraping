@@ -7,7 +7,7 @@ st.title('Flipkart Review Scraper')
 inp= st.text_input("Enter Search Term", "Redmi Phones").replace(" ", "%20")
 url="https://www.flipkart.com/search?q=" + inp
 a=requests.get(url)
-st.write(str(a))
+# st.write(str(a))
 dat=bs(a.text,'html.parser').findAll("div",{"class":"_1AtVbE col-12-12"})[2:][:-2]
 products=[]
 for i in range(len(dat)):
